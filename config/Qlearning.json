@@ -1,0 +1,8 @@
+{
+    "max_epsilon": 1.0,    
+    "min_epsilon": 0.01,   
+    "epsilon_decay": 0.995,    
+    "learning_rate": 0.1,          
+    "discount_factor": 0.9,
+    "epsilon": 1.0   
+}
