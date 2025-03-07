@@ -16,7 +16,7 @@ Este proyecto es un juego de laberinto implementado en Python utilizando la bibl
 
 Para ejecutar este proyecto, necesitas tener instalado lo siguiente:
 
-- **Python 3.x**: Asegúrate de tener Python instalado en tu sistema.
+- **Python 3.12**: Asegúrate de tener Python instalado en tu sistema.
 - **Pygame**: La biblioteca `pygame` se utiliza para la interfaz gráfica del juego.
 - **NumPy**: Se utiliza para manejar matrices y operaciones numéricas.
 - **Matplotlib**: Se utiliza para graficar el historial de éxito del agente.
@@ -52,7 +52,7 @@ Este archivo contiene los siguientes parámetros:
 - **`max_episodes`**: El número máximo de episodios de entrenamiento.
 - **`size`**: El tamaño de la Q-table (depende del tamaño del laberinto).
 - **`load_weights`**: Si es `true`, el juego cargará una Q-table previamente entrenada desde `Checkpoints/Q_table.npy`. Si es `false`, comenzará con una Q-table vacía.
-- **`enable_render`**: Si es `true`, se habilitará la renderización gráfica del juego. Si es `false`, el juego se ejecutará en modo "headless" (sin interfaz gráfica).
+- **`enable_render`**: Si es `true`, se habilitará la renderización de los caminos entre mouse y **target**(elefante) donde podremos visualizar en verde el camino que esta siguiendo el elefante como el correcto y en azul veremos al raton buscando un espacio en blanco por donde pasar. Si es `false`, el juego se ejecutará el render por default para visualizar el camino. 
 
 ### Archivo `Qlearning.json`
 
