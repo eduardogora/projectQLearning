@@ -6,9 +6,9 @@ Autores:
 - Rolando "Rolo" Palacios
 - Jose Pablo "Maza" Lopez
 
-## Juego de Laberinto con Q-Learning
+## Block Fill con Q-Learning
 
-Este proyecto es un juego de laberinto implementado en Python utilizando la biblioteca `pygame`. El objetivo del juego es que un agente (representado por un bloque) recorra el laberinto y coloree todas las celdas de camino (`ROAD`) sin chocar con los muros (`WALL`). El agente utiliza el algoritmo de **Q-learning** para aprender a moverse de manera óptima en el laberinto.
+Este proyecto es un juego de laberinto implementado en Python utilizando la biblioteca `pygame`. El objetivo del juego es que un agente (representado por un bloque) recorra el laberinto y coloree todas las celdas de camino (`ROAD`) sin chocar con los muros (`WALL`). El agente utiliza el algoritmo de **Q-learning** para aprender a moverse de manera óptima en el laberinto y rellenar todos los espacios en blanco.
 
 ---
 
