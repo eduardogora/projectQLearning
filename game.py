@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import random
 import os
 
-from easyMazes import grids, startPoints
+from mediumMazes import grids, startPoints
 
 pygame.init()
 
@@ -149,9 +149,14 @@ class GAME:
         self.enable_render = enable_render
 
         # Grid and block
-        self.grid = grids[mazeNumber]
+        self.grid = np.copy(grids[mazeNumber])  # Use a copy of the original grid
         self.block = Block(posI[0], posI[1])  # Initialize the block at the starting position
         self.path = []  # Track the block's path
+
+        # Verificar si la posición inicial es válida
+        if self.block.is_stuck():
+            print("Posición inicial inválida. Reiniciando laberinto.")
+            self.reset_episode()
 
         self.ql = QlearningGame(size)  # Q-learning class
 
@@ -212,7 +217,10 @@ class GAME:
 
     def check_step_limit(self):
         if self.steps > max_steps or self.block.is_stuck():
-            # Reset the episode if the step limit is exceeded or if the player is stuck
+            # Calcular recompensa/penalización antes de reiniciar
+            self.reward_select()
+            
+            # Reiniciar el episodio si se excede el límite de pasos o si el jugador está atascado
             self.episode += 1
             self.steps = 0
             print(f'game - Episode {self.episode}, step {max_steps}')
@@ -227,20 +235,25 @@ class GAME:
         return True
 
     def reset_episode(self):
-        # Reset the grid to a blank state
-        self.grid = np.full((ROWS, COLS), ROAD)  # Fill the grid with road cells (ROAD)
-
-        # Restore the walls
-        for row in range(ROWS):
-            for col in range(COLS):
-                if grids[mazeNumber][row][col] == WALL:
-                    self.grid[row][col] = WALL  # Restore the walls
+        # Reset the grid to its original state
+        self.grid = np.copy(grids[mazeNumber])  # Restore the original grid
 
         # Reset the block's position
         self.block = Block(posI[0], posI[1])
 
         # Clear the path history
         self.path = []
+
+        # Reset the state
+        self.state = ROWS * self.block.row + self.block.col
+
+        # Verificar si la posición inicial es válida
+        if self.block.is_stuck():
+            print("Posición inicial inválida. Reiniciando laberinto.")
+            self.reward_select()  # Calcular recompensa/penalización después de reiniciar
+            self.reset_episode()  # Reiniciar nuevamente si la posición inicial es inválida
+        else:
+            self.reward_select()  # Calcular recompensa/penalización después de reiniciar
 
     def increment_step(self):
         self.steps += 1
@@ -287,8 +300,8 @@ class GAME:
             self.load_epsilon()
             self.update_action()
             self.increment_step()
-            self.reward_select()
-            self.check_step_limit()
+            self.reward_select()  # Calcular recompensa/penalización en cada paso
+            self.check_step_limit()  # Verificar si el jugador está atascado o ha excedido el límite de pasos
 
             # Update the state
             next_state = ROWS * self.block.row + self.block.col
