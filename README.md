@@ -1,4 +1,6 @@
 # README.md
+---
+Autores: Eduardo "Gora" Gonzales, Sebastian "Asti" Astiazaran, Rolando "Rolo" Palacios, Jose Pablo "Maza" Lopez
 
 ## Juego de Laberinto con Q-Learning
 
