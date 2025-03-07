@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import random
 import os
 
-from mediumMazes import grids, startPoints
+from easyMazes import grids, startPoints
 
 pygame.init()
 
@@ -136,7 +136,7 @@ class QlearningGame:
 
 # Q-Learning Game class
 class GAME:
-    def __init__(self, load_weights=False, enable_render=enable_renderJSON):
+    def __init__(self, load_weights=load_weights, enable_render=enable_renderJSON):
         self.run = True
         self.episode = 0
         self.state = 0
@@ -159,6 +159,13 @@ class GAME:
             self.reset_episode()
 
         self.ql = QlearningGame(size)  # Q-learning class
+
+        if load_weights:
+            if os.path.exists('Checkpoints/Q_table.npy'):
+                self.ql.q_table = np.load('Checkpoints/Q_table.npy')
+                print("Q-table cargada desde Checkpoints/Q_table.npy")
+            else:
+                print("No se encontró el archivo Checkpoints/Q_table.npy. Iniciando con Q-table vacía.")
 
     def load_epsilon(self):
         self.epsilon = self.ql.get_epsilon(self.episode)
